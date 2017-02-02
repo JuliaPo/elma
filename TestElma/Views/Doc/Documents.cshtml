@@ -1,0 +1,38 @@
+﻿@model IEnumerable<TestElma.Models.Document>
+
+@{
+    ViewBag.Title = "Документы";
+}
+
+<h2>Документы</h2>
+
+
+<div class="container-fluid">
+    <div class="row">
+        @using (Html.BeginForm("Documents", "Doc"))
+        {
+            @Html.AntiForgeryToken()
+            <div class="col-md-6 col-md-offset-6">
+                <div class="form-horizontal pull-right">
+                    <div class="form-group">
+                        @Html.Label("Поиск по")
+                        @Html.DropDownList("field")
+                        @Html.TextBox("Search", ViewBag.CurrentFilter as string)
+                        <input type="submit" value="Найти" class="btn btn-default btn-sm" />
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+    <div class="row">
+        @Html.DisplayForModel("Documents")
+    </div>
+
+</div>
+
+@if (ViewBag.Searching == "y")
+{
+    <div>
+        @Html.ActionLink("<Back to List", "Documents")
+    </div>
+}

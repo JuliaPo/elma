@@ -1,0 +1,63 @@
+﻿@model IEnumerable<TestElma.Models.Document>
+
+@{
+    ViewBag.Title = "Документы";
+}
+
+<table class="table table-striped table-responsive">
+    <thead>
+        <tr>
+            <th>
+                @Html.ActionLink("Имя", "Documents", new { sortOrder = ViewBag.NameSortParam, currentFilter = ViewBag.CurrentFilter })
+            </th>
+            <th>
+                @Html.ActionLink("Дата создания", "Documents", new { sortOrder = ViewBag.DateSortParam, currentFilter = ViewBag.CurrentFilter })
+            </th>
+            <th>
+                @Html.ActionLink("Автор", "Documents", new { sortOrder = ViewBag.AuthorSortParam, currentFilter = ViewBag.CurrentFilter })
+            </th>
+            <th class="text-center">
+                @Html.DisplayNameFor(model => model.FileExt)
+            </th>
+        </tr>
+    </thead>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                <label title="@item.Name">
+                    @Html.Raw(item.Name.Length > 30 ? string.Format("{0}...", item.Name.Substring(0, 30)) : item.Name)
+                </label>
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Date)
+            </td>
+
+            @if (User.Identity.Name != item.Author)
+                {
+                <td>
+                    @Html.DisplayFor(modelItem => item.Author)
+                </td>
+
+                    <td class="text-center">
+                        <a class="btn btn-default disabled glyphicon glyphicon-download-alt"
+                           title="У Вас нет доступа к скачиванию чужих файлов" />
+                    </td>
+            }
+            else
+            {
+                <td>
+                    @Html.DisplayFor(modelItem => item.Author)
+                </td>
+
+                    <td class="text-center">
+                        <a class="btn btn-default glyphicon glyphicon-download-alt"
+                           href="@Url.Action("Download", "Doc", new { name = item.Name.ToString(), author = item.Author.ToString()}) " />
+                    </td>
+            }
+
+        </tr>
+    }
+
+</table>

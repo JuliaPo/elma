@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
+                   assembly="TestElma"
+                   namespace="TestElma.Models">
+
+  <class name="User" table="Users">
+    <id name="Id">
+      <generator class="guid" />
+    </id>
+    <property name="UserName" />
+    <property name="Email" />
+    <property name="Password"/>
+
+    <sql-insert xml:space="preserve">
+      EXEC dbo.addDoc @UserName = ?, @Email = ?, @Password = ?
+    </sql-insert>
+
+  </class>
+
+</hibernate-mapping>

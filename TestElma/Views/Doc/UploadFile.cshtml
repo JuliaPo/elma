@@ -1,0 +1,31 @@
+﻿
+@{
+    ViewBag.Title = "Новый документ";
+}
+
+@using (Html.BeginForm("UploadFile", "Doc", FormMethod.Post,
+                                        new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+    <br />
+    <fieldset>
+        <legend>Новый документ</legend>
+        <div>
+            <p>
+                <strong>@ViewBag.Message</strong>
+            </p>
+        </div>
+        <div class="editor-field">
+            @Html.TextBox("file", "", new { type = "file" })
+        </div>
+        <p class="help-block">Выберите файл для загрузки</p>
+        <div class="editor-field">
+            <input type="submit" value="Добавить" class="btn btn-default" />
+        </div>
+    </fieldset>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bootstrap.js")
+}
